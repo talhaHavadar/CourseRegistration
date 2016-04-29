@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CourseInfo, Schedule, Semester, Settings
+from Registration.models import CourseInfo, Schedule, Semester, Settings
 # Register your models here.
 @admin.register(CourseInfo)
 class CourseInfoAdmin(admin.ModelAdmin):
