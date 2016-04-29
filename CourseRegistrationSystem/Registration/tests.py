@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.test import Client
 from Registration.models import CourseInfo
 from Registration.models import Schedule
 from Registration.models import Settings
@@ -35,3 +36,17 @@ class CourseInfoTestCase(TestCase):
 		self.assertEqual(settings.on_registration, True)
 		self.assertEqual(len(Semester.objects.all()), 1)
 		self.assertEqual(semester.name, "2015-2016 Güz")
+	def test_api(self):
+		c = Client()
+		res = c.get("/api/schedules/?format=json")
+		jData = res.json()
+		self.assertEqual(len(jData), 1)
+		res = c.get("/api/schedules/?format=json&confirmed=True")
+		jData = res.json()
+		self.assertFalse(len(jData))
+		res = c.get("/api/schedules/?format=json&student_id=3&confirmed=False")
+		jData = res.json()
+		self.assertTrue(len(jData))
+		res = c.get("/api/schedules/?format=json&course__code=CME3008")
+		jData = res.json()
+		self.assertEqual(len(jData), 1)
