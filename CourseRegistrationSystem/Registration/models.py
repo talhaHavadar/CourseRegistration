@@ -28,6 +28,9 @@ class Schedule(models.Model):
 
 	class Meta:
 		unique_together = (("student_id","semester"),)
+class Semester(models.Model):
+	name = models.CharField(max_length = 25, unique = True)
+		
 class Settings(models.Model):
 	on_registration = models.BooleanField(default = False)	
 
