@@ -1,0 +1,9 @@
+// Schedule GET Api
+{
+  "schedule_id": Integer,
+  "student_id": Integer | String,
+  "semester_id": Integer,
+  "monday": [CourseId,...],
+  "tuesday": [CourseId,....],
+  ......
+}
