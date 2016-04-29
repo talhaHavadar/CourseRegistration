@@ -20,16 +20,16 @@ class CourseInfo(models.Model):
 
 class Schedule(models.Model):
 	student_id = models.IntegerField()
-	comfirmed = models.BooleanField(default = False)
-	semester = models.ForeingKey(
+	confirmed = models.BooleanField(default = False)
+	semester = models.ForeignKey(
 		'Semester',
 		on_delete = models.CASCADE)
 	courses = models.ManyToManyField(CourseInfo, related_name = 'schedule')
 
 	class Meta:
 		unique_together = (("student_id","semester"),)
-class Semester(models.Model):
-	name = models.CharField(max_length = 25, unique = True)
 class Settings(models.Model):
-	on_registration = models.BooleanField(default = False)	
+	on_registration = models.BooleanField(default = False)
 
+class Settings(models.Model):
+	on_registration = models.BooleanField(default = False)
