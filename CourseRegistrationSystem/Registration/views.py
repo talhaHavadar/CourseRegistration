@@ -29,4 +29,5 @@ def index(request):
         return redirect("Registration:login")
     else:
         print(request.session.get("user", False))
+    # del request.session["user"]
     return render(request, "Registration/mainPage.html")
