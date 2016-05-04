@@ -23,6 +23,7 @@ router.register(r'schedules', ScheduleViewSet)
 
 
 urlpatterns = [
+    url(r'', include('Registration.urls', namespace = "Registration")),
     url(r'^admin/', admin.site.urls),
     # url(r'^api/', include(router.urls)),
     url('^api/schedules/$', ScheduleList.as_view()),
