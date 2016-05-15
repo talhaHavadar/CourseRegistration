@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # Third party apps
     'rest_framework',
     "crispy_forms",
+    'channels',
     # Our apps
     'Registration'
 ]
@@ -127,6 +128,14 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# django channels
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "CourseRegistrationSystem.routing.channel_routing"
+    }
+}
 
 
 # Static files (CSS, JavaScript, Images)
