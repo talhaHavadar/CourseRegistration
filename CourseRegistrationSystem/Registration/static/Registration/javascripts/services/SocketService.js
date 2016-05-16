@@ -13,7 +13,16 @@ app.factory("SocketService", function() {
     socket.onmessage = function (data) {
       onmessageCallback(JSON.parse(data.data));
     };
-  }
+  };
+
+  factory.isConnected = function() {
+    return socket !== undefined;
+  };
+
+  factory.close = function() {
+    socket.close();
+    socket = undefined;
+  };
 
   factory.send = function(data) {
     socket.send(JSON.stringify(data));

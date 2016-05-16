@@ -10,15 +10,18 @@
 {% endblock stylesheets %}
 
 {% block services %}
+<script src="{% static 'Registration/javascripts/services/SocketService.js' %}" charset="utf-8"></script>
+<script src="{% static 'Registration/javascripts/services/RegistrationService.js' %}" charset="utf-8"></script>
 
 {% endblock services %}
 
 {% block controllers %}
-
+<script src="{% static 'Registration/javascripts/controllers/RegistrationController.js' %}" charset="utf-8"></script>
 {% endblock controllers %}
 
 {% block body %}
-<body ng-app="CourseRegistrationApp" >
-  
+<body ng-app="CourseRegistrationApp" ng-controller="RegistrationController as ctrl" >
+
+
 </body>
 {% endblock body %}
