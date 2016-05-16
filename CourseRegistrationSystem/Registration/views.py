@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 import json
+from .api_handler import *
 
 student = {
     "studentNo": "2013510047",
@@ -14,18 +15,19 @@ def login(request):
     if request.method == "POST":
         POST = json.loads(request.body.decode("utf-8"))
         no = POST["studentNo"]
-        print("post", POST)
-        if no and student['studentNo'] == no:
-            if POST["password"] and POST["password"] == student['password']:
-                request.session["user"] = no;
-                return JsonResponse({ "success": True, "studentNo": no })
-            else:
-                return JsonResponse({ "success": False, "message": "Password is wrong!!" })
-        return JsonResponse({ "success": False, "message": "Wrong student number!!" })
+        passwd = POST["password"]
+        success, message = isStudentValid(no, passwd)
+        if success:
+            request.session["user"] = no;
+            return JsonResponse({ "success": True, "studentNo": no })
+        else:
+            return JsonResponse({ "success": False, "message": message })
     return render(request, "Registration/login.html")
 
 def pinfo(request):
-    return render(request, "Registration/personalPage.html")
+    student = getStudent(request.session["user"])
+
+    return render(request, "Registration/personalPage.html", { "student": student })
 
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -48,10 +50,11 @@ def mail(request):
 def registration(request):
     pass
 
-
 def logout(request):
-    return HttpResponse("Deneme bir ki")
+    del request.session["user"]
+    return redirect("Registration:login")
 
 def index(request):
     # del request.session["user"]
-    return render(request, "Registration/mainPage.html")
+    student = getStudent(request.session["user"])
+    return render(request, "Registration/mainPage.html", { "student": student })

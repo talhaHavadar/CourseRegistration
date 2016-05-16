@@ -8,5 +8,6 @@ urlpatterns = [
     url(r'^courseregistration$', views.registration, name="course_registration"),
     url(r'^index$', views.index, name="index"),
     url(r'^mail$', views.mail, name="mail"),
+    url(r'^logout$', views.mail, name="mail"),
     url(r'^$', views.index, name="index")
 ]
