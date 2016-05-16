@@ -1,6 +1,8 @@
 app.factory("CourseService",function($http, $q){
 	var factory = {};
 	
+
+	
 	factory.getCourse = function(studentNo){
 
 	};	
@@ -13,5 +15,5 @@ app.factory("CourseService",function($http, $q){
 
 	};
 
-	return factory
+	return factory;
 });
