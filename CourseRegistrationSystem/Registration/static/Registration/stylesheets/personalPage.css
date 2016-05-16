@@ -1,0 +1,52 @@
+@font-face {
+  font-family: "GentiumRegular";
+  src: url("../fonts/GentiumRegular.ttf"); }
+@font-face {
+  font-family: "GentiumBold";
+  src: url("../fonts/GentiumBold.ttf"); }
+body .headerContainer {
+  background-color: #ac2629;
+  font-family: GentiumBold;
+  font-size: 15pt;
+  color: #f8f5f1;
+  padding: 10px 5px;
+  padding-bottom: 0; }
+  body .headerContainer .infoHeader {
+    justify-content: center;
+    display: inline-block; }
+  body .headerContainer .universityName1 {
+    text-align: center;
+    font-size: 30pt; }
+  body .headerContainer .universityName2 {
+    text-align: center;
+    font-size: 30pt; }
+  body .headerContainer .navbar {
+    border: none;
+    background-color: #ac2629; }
+    body .headerContainer .navbar a {
+      color: #f8f5f1;
+      background-color: transparent; }
+    body .headerContainer .navbar a:hover {
+      background-color: #dc6871; }
+    body .headerContainer .navbar a:focus {
+      background: transparent; }
+  body .headerContainer .nav {
+    background-color: #ac2629; }
+  body .headerContainer .active {
+    background-color: #dc6871; }
+
+.bodyContainer p {
+  justify-content: center;
+  font-family: GentiumBold;
+  font-size: 20pt;
+  color: #987284; }
+.bodyContainer .labelContainer {
+  font-family: GentiumBold;
+  font-size: 12pt;
+  color: #987284; }
+.bodyContainer .labelContainer2 {
+  font-family: GentiumRegular;
+  font-size: 12pt;
+  color: #dc6871; }
+
+/*# sourceMappingURL=personalPage.css.map */
