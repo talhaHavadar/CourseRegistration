@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 import json
+import arrow
+from .api_handler import *
 
 student = {
     "studentNo": "2013510047",
@@ -14,18 +16,19 @@ def login(request):
     if request.method == "POST":
         POST = json.loads(request.body.decode("utf-8"))
         no = POST["studentNo"]
-        print("post", POST)
-        if no and student['studentNo'] == no:
-            if POST["password"] and POST["password"] == student['password']:
-                request.session["user"] = no;
-                return JsonResponse({ "success": True, "studentNo": no })
-            else:
-                return JsonResponse({ "success": False, "message": "Password is wrong!!" })
-        return JsonResponse({ "success": False, "message": "Wrong student number!!" })
+        passwd = POST["password"]
+        success, message = isStudentValid(no, passwd)
+        if success:
+            request.session["user"] = no;
+            return JsonResponse({ "success": True, "studentNo": no })
+        else:
+            return JsonResponse({ "success": False, "message": message })
     return render(request, "Registration/login.html")
 
 def pinfo(request):
-    return render(request, "Registration/personalPage.html")
+    student = getStudent(request.session["user"])
+
+    return render(request, "Registration/personalPage.html", { "student": student })
 
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -45,13 +48,35 @@ def mail(request):
         # to get proper validation errors.
         return HttpResponse('Make sure all fields are entered and valid.')
 
-def registration(request):
-    pass
+def calc_semester(sClass):
+    semester = sClass * 2
+    now = arrow.now()
+    if now.month > 9 and now.month < 2 :
+        semester -= 1
+    return semester
 
+def registration(request):
+    if request.method == "POST":
+        POST = json.loads(request.body.decode("utf-8"))
+        if POST["method"] == "courses":
+            student = getStudent(request.session["user"])
+            sClass = student["class_no"]
+            semester = calc_semester(sClass)
+            courses = getCourses(semester)
+            return JsonResponse({"success": True, "courses": courses})
+        elif POST["method"] == "me":
+            student = getStudent(request.session["user"])
+            student["semester"] = calc_semester(student["class_no"])
+            return JsonResponse({ "success": True, "student": student })
+        else:
+            return JsonResponse({"success": False, "message": "Invalid method." })
+    return HttpResponse("Deneme")
 
 def logout(request):
-    return HttpResponse("Deneme bir ki")
+    del request.session["user"]
+    return redirect("Registration:login")
 
 def index(request):
     # del request.session["user"]
-    return render(request, "Registration/mainPage.html")
+    student = getStudent(request.session["user"])
+    return render(request, "Registration/mainPage.html", { "student": student })

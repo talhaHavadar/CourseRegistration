@@ -1,7 +1,7 @@
 [
   {
     "id" : 125,
-    "semester": 5,
+    "semester": 6,
     "code" : "CME3008",
     "name": "Circuit Falan filan" ,
     "instructor_id" : 21,
@@ -11,7 +11,7 @@
   },
   {
     "id" : 128,
-    "semester": 5,
+    "semester": 6,
     "code" : "CME3006",
     "name": "Network falan" ,
     "instructor_id" : 25,

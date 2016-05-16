@@ -1,5 +1,6 @@
 {% extends 'Registration/base.html' %}
 {% load staticfiles %}
+{% load app_filters %}
 {% block title %}
 {{ block.super }} Main Page
 {% endblock title %}
@@ -8,6 +9,7 @@
 {% endblock stylesheets %}
 {% block services %}
 <script src="{% static 'Registration/javascripts/services/StudentFactory.js' %}"></script>
+<script src="{% static 'Registration/javascripts/services/CourseFactory.js' %}"></script>
 {% endblock services %}
 {% block controllers %}
 <script src="{% static 'Registration/javascripts/controllers/MainController.js' %}"></script>
@@ -20,19 +22,19 @@
             <div class="col-md-4 col-md-offset-1">
                 <div class="nameContainer">
                     <label>Name :</label>
-                    <label>Gulgun PEKMEZCİ</label>
+                    <label>{{ student|valuefor:"name" }} {{ student|valuefor:"surname"|upper }}</label>
                 </div>
                 <div class="facultyContainer">
                     <label>Faculty :</label>
-                    <label>Engineering</label>
+                    <label>{{ student|valuefor:"faculty"|valuefor:"name" }}</label>
                 </div>
                 <div class="classContainer">
                     <label>Class :</label>
-                    <label>3</label>
+                    <label>{{ student|valuefor:"class_no" }}</label>
                 </div>
                 <div class="AdvisorContainer">
                     <label>Advisor :</label>
-                    <label>Şen ÇAKIR</label>
+                    <label>{{ student|valuefor:"advisor"|valuefor:"Name" }}</label>
                 </div>
             </div>
             <div class="col-md-3">
@@ -42,15 +44,15 @@
             <div class="col-md-4">
                 <div class="studentNoContainer">
                     <label>Student No :</label>
-                    <label>2012510051</label>
+                    <label>{{ student|valuefor:"studentNo" }}</label>
                 </div>
                 <div class="departmentContainer">
                     <label>Department :</label>
-                    <label>Computer Engineer</label>
+                    <label>{{ student|valuefor:"department"|valuefor:"name" }}</label>
                 </div>
                 <div class="cumulativeContainer">
                     <label>Cumulative :</label>
-                    <label>4.0</label>
+                    <label>{{ student|valuefor:"transcript"|valuefor:"cumulative" }}</label>
                 </div>
             </div>
         </div>
@@ -67,10 +69,9 @@
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li ng-class="{ 'active': isOnPage(0) }"><a ng-click="setPage(0)" href="">Main Page</a></li>
-                            <li ng-class="{ 'active': isOnPage(1) }"><a ng-click="setPage(1)" href="">Course Registration</a></li>
-                            <li ng-class="{ 'active': isOnPage(2) }"><a ng-click="setPage(2)" href="">Address Information</a></li>
-                            <li ng-class="{ 'active': isOnPage(3) }"><a ng-click="setPage(3)" href="">Personal Information</a></li>
+                            <li class="active"><a href="#">Main Page</a></li>
+                            <li><a href="/courseregistration">Course Registration</a></li>
+                            <li><a href="/pinfo">Personal Information</a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div><!--/.container-fluid -->

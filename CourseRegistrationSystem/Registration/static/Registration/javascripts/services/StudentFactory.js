@@ -6,7 +6,6 @@ app.factory("StudentService", function($http, $q) {
       studentNo: studentNo,
       password: password
     }).then(function(data) {
-      console.log(data);
       if (data.status == 200 && data.data.success == true) {
         deferred.resolve(data.data);
       } else {
@@ -16,7 +15,6 @@ app.factory("StudentService", function($http, $q) {
         });
       }
     }, function(data) {
-      console.log(data);
       if (data.status == 200) {
         deferred.reject(data.data)
       } else {
@@ -34,7 +32,20 @@ app.factory("StudentService", function($http, $q) {
   };
 
   factory.me = function() {
-    alert("Me is not implemented yet!");
+    var deferred = $q.defer();
+    $http.post("/courseregistration", {
+      "method": "me"
+    }).then(function (data) {
+      console.log("me", data);
+      if (data.data.success === true) {
+        deferred.resolve(data.data);
+      } else {
+        deferred.reject(data.data);
+      }
+    }, function (data) {
+      deferred.reject({ success: false, message: "Something went wrong" });
+    });
+    return deferred.promise;
   };
 
   return factory;
