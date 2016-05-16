@@ -1,21 +1,25 @@
 {% extends 'Registration/base.html' %}
 {% load staticfiles %}
+
 {% block title %}
 {{ block.super }} Login
 {% endblock title%}
+
 {% block stylesheets %}
 <link rel="stylesheet" href="{% static 'Registration/stylesheets/login.css' %}">
 {% endblock stylesheets %}
+
 {% block services %}
 <script src="{% static 'Registration/javascripts/services/StudentFactory.js' %}"></script>
 <script src="{% static 'Registration/javascripts/services/SocketService.js' %}"></script>
 {% endblock services %}
+
 {% block controllers %}
 <script src="{% static 'Registration/javascripts/controllers/LoginController.js' %}"></script>
 {% endblock controllers %}
+
 {% block body %}
 <body ng-app="CourseRegistrationApp" ng-controller="LoginController as ctrl">
-
   <div class="container login-form-container" >
     <div id="alert-container">
     </div>

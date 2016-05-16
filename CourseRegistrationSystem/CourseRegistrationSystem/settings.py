@@ -54,6 +54,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'Registration.middleware.ValidUserMiddleware'
 ]
 
 ROOT_URLCONF = 'CourseRegistrationSystem.urls'

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 import json
 
 student = {
@@ -24,10 +24,12 @@ def login(request):
         return JsonResponse({ "success": False, "message": "Wrong student number!!" })
     return render(request, "Registration/login.html")
 
+def pinfo(request):
+    return render(request, "Registration/personalPage.html")
+
+def logout(request):
+    return HttpResponse("Deneme bir ki")
+
 def index(request):
-    if not request.session.get("user", False):
-        return redirect("Registration:login")
-    else:
-        print(request.session.get("user", False))
     # del request.session["user"]
     return render(request, "Registration/mainPage.html")

@@ -18,6 +18,9 @@ class CourseInfo(models.Model):
 	instructor_name = models.CharField(max_length = 100)
 	day = models.IntegerField(choices = DAYS, default = DAYS.Monday)
 
+	def __str__(self):
+		return u"{} - {}".format(self.code, self.instructor_name)
+
 class Schedule(models.Model):
 	student_id = models.IntegerField()
 	confirmed = models.BooleanField(default = False)
@@ -28,8 +31,13 @@ class Schedule(models.Model):
 
 	class Meta:
 		unique_together = (("student_id","semester"),)
+
+	def __str__(self):
+		return u"{} | {}".format(self.student_id, self.semester.name)
 class Semester(models.Model):
 	name = models.CharField(max_length=25, unique=True)
+	def __str__(self):
+		return u"{}".format(self.name)
 
 class Settings(models.Model):
 	on_registration = models.BooleanField(default = False)

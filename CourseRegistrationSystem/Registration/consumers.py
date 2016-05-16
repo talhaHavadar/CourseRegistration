@@ -22,7 +22,7 @@ def ws_message(message):
             })
         })
         return
-    
+
     message.reply_channel.send({
         "text": str(json.dumps({
             "success": True,
