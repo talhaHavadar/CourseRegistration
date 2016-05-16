@@ -35,6 +35,29 @@ def isStudentValid(student_no, password):
 def getCourse(code):
     pass
 
+def getCourses(semester):
+    return [
+      {
+        "id" : 125,
+        "semester": 6,
+        "code" : "CME3008",
+        "name": "Circuit Falan filan" ,
+        "instructor_id" : 21,
+        "start_time": "13:00:00",
+        "end_time": "14:15:00",
+        "quata": 25
+      },
+      {
+        "id" : 128,
+        "semester": 6,
+        "code" : "CME3006",
+        "name": "Network falan" ,
+        "instructor_id" : 25,
+        "start_time": "10:00:00",
+        "end_time": "12:15:00",
+        "quata": 40
+      }]
+
 def getTranscript(studentNo):
     return { "cumulative": 4.0 }
 

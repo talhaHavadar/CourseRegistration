@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 import json
+import arrow
 from .api_handler import *
 
 student = {
@@ -47,8 +48,29 @@ def mail(request):
         # to get proper validation errors.
         return HttpResponse('Make sure all fields are entered and valid.')
 
+def calc_semester(sClass):
+    semester = sClass * 2
+    now = arrow.now()
+    if now.month > 9 and now.month < 2 :
+        semester -= 1
+    return semester
+
 def registration(request):
-    pass
+    if request.method == "POST":
+        POST = json.loads(request.body.decode("utf-8"))
+        if POST["method"] == "courses":
+            student = getStudent(request.session["user"])
+            sClass = student["class_no"]
+            semester = calc_semester(sClass)
+            courses = getCourses(semester)
+            return JsonResponse({"success": True, "courses": courses})
+        elif POST["method"] == "me":
+            student = getStudent(request.session["user"])
+            student["semester"] = calc_semester(student["class_no"])
+            return JsonResponse({ "success": True, "student": student })
+        else:
+            return JsonResponse({"success": False, "message": "Invalid method." })
+    return HttpResponse("Deneme")
 
 def logout(request):
     del request.session["user"]

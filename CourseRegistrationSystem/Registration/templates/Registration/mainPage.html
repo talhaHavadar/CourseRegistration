@@ -9,6 +9,7 @@
 {% endblock stylesheets %}
 {% block services %}
 <script src="{% static 'Registration/javascripts/services/StudentFactory.js' %}"></script>
+<script src="{% static 'Registration/javascripts/services/CourseFactory.js' %}"></script>
 {% endblock services %}
 {% block controllers %}
 <script src="{% static 'Registration/javascripts/controllers/MainController.js' %}"></script>
@@ -21,7 +22,7 @@
             <div class="col-md-4 col-md-offset-1">
                 <div class="nameContainer">
                     <label>Name :</label>
-                    <label>{{ student|valuefor:"name" }} {{ student|valuefor:"surname" }}</label>
+                    <label>{{ student|valuefor:"name" }} {{ student|valuefor:"surname"|upper }}</label>
                 </div>
                 <div class="facultyContainer">
                     <label>Faculty :</label>
