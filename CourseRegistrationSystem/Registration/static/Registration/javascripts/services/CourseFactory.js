@@ -1,10 +1,10 @@
-app.factory("CourseService",function($http, $q){ 
+app.factory("CourseService",function($http, $q, StudentService){
 	var factory = {};
-	
+
 	factory.getCourse = function(){
 	var deferred = $q.defer();
-		$http.post('/courseregistration',{ 
-			"method": "courses"	
+		$http.post('/courseregistration',{
+			"method": "courses"
 			}).then(function(data){
 				console.log(data);
 				if(data.status == 200 && data.data.success == true){
@@ -27,7 +27,6 @@ app.factory("CourseService",function($http, $q){
 	      	}
 		});
 	};
-	
 
 	factory.filterCourse = function(cumulative){
 

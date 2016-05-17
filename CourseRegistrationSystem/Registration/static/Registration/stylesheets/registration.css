@@ -35,14 +35,9 @@ body .headerContainer {
   body .headerContainer .active {
     background-color: #dc6871; }
 
-.bodyContainer .selectContainer {
-  padding: 20px;
+.courseContainer {
   font-family: GentiumRegular;
   font-size: 15pt;
   color: #dc6871; }
-  .bodyContainer .selectContainer select {
-    display: flex; }
-  .bodyContainer .selectContainer .col-md-12 {
-    margin: 5px 0; }
 
-/*# sourceMappingURL=courseRegistation.css.map */
+/*# sourceMappingURL=registration.css.map */

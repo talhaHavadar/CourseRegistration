@@ -70,7 +70,8 @@ def registration(request):
             return JsonResponse({ "success": True, "student": student })
         else:
             return JsonResponse({"success": False, "message": "Invalid method." })
-    return HttpResponse("Deneme")
+    student = getStudent(request.session["user"])
+    return render(request, "Registration/registration.html", { "student": student })
 
 def logout(request):
     del request.session["user"]

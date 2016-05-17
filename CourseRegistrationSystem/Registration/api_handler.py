@@ -1,8 +1,8 @@
 import requests
 import json
 
-STUDENTS_API_URL = "http://192.168.1.5:8000/api/students/" # "./json/student.json" # change to local ip of student page
-STUDENTS_VALIDATE_API_URL = "http://192.168.1.5:8000/api/students/validation"
+STUDENTS_API_URL = "http://194.27.104.26:8000/api/students/" # "./json/student.json" # change to local ip of student page
+STUDENTS_VALIDATE_API_URL = "http://194.27.104.26:8000/api/students/validation"
 COURSE_API_URL = ""
 TRANSCRIPT_API_URL = ""
 INSTRUCTOR_API_URL = ""
