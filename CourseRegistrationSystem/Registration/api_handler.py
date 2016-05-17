@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import requests
 import json
 
@@ -14,6 +16,7 @@ def getStudent(student_no):
     }
     r = requests.get(STUDENTS_API_URL, params = payload)
     data = r.json()
+    print("url", r.url)
     if len(data) != 0:
         advisor = getInstructor(data[0]["advisorId"])
         transcript = getTranscript(data[0]["studentNo"])
@@ -39,25 +42,26 @@ def getCourse(code):
 def getCourses(semester):
     courses = list()
     courses.append({"id" : 125,"semester": 6,"code" : "CME3008","name": "Circuit Falan filan" ,"instructor_id" : 16,"start_time": "13:00:00","end_time": "14:15:00","quata": 25})
-    courses.append({"id" : 128,"semester": 6,"code" : "CME3006","name": "Network falan","instructor_id" : 13,"start_time": "10:00:00","end_time": "12:15:00","quata": 40 })
+    courses.append({"id" : 128,"semester": 6,"code" : "CME3006","name": "Network falan","instructor_id" : 30,"start_time": "10:00:00","end_time": "12:15:00","quata": 40 })
     courses.append({"id" : 130,"semester": 6,"code" : "CME3006","name": "Network falan","instructor_id" : 28,"start_time": "10:00:00","end_time": "12:15:00","quata": 40 })
-    # r = requests.post(COURSE_API_URL, data= { "format": "json" })
+    r = requests.post(COURSE_API_URL, data= { "format": "json" })
+    courses = r.json()
     for c in courses:
-        instructor = getInstructor(c["instructor_id"])
+        instructor = getInstructor(c["instructor"])
         c["instructor"] = instructor
 
     return courses
 
 def getTranscript(studentNo):
-    data = {"data":{
-                    "cumulative" : "0.42",
-                    "CoursesAndGrades":{
-                                        "CME3008":"AA",
-                                        "CME3006":"FF"
-                                    }
-        }
-    }
-    return data["data"]["cumulative"]
+    studentNo = 100 # geçici
+    r = requests.post(TRANSCRIPT_API_URL, data = {"studentNumber": studentNo})
+    try:
+        transcript = r.json()
+        transcript = transcript["transcript"]
+    except Exception as e:
+        transcript = dict()
+        transcript["Cumulative"] = 4.0
+    return { "cumulative": transcript["Cumulative"] }
 
 def getInstructor(id):
     r = requests.post(INSTRUCTOR_API_URL, data = { "id": id })
@@ -67,4 +71,6 @@ def getInstructor(id):
     return None
 
 def getInstructors():
-    pass
+    r = requests.get(INSTRUCTOR_API_URL)
+    instructors = r.json()
+    return instructors

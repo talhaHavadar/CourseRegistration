@@ -51,7 +51,7 @@ app.factory("CourseService",function($http, $q, StudentService){
 	      		}
 	    	});
 	    }
-	});
+		});
 		return deferred.promise;
 	}
 

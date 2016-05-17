@@ -9,5 +9,5 @@ class ValidUserMiddleware:
             if not request.session.get("user", False):
                 return redirect("Registration:login")
             else:
-                print(request.session.get("user", False))
+                pass#print(request.session.get("user", False))
         return None
