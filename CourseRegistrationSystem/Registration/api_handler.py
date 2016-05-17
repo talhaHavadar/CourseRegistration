@@ -35,6 +35,7 @@ def isStudentValid(student_no, password):
 def getCourse(code):
     pass
 
+
 def getCourses(semester):
     courses = list()
     courses.append({"id" : 125,"semester": 6,"code" : "CME3008","name": "Circuit Falan filan" ,"instructor_id" : 16,"start_time": "13:00:00","end_time": "14:15:00","quata": 25})
@@ -48,7 +49,15 @@ def getCourses(semester):
     return courses
 
 def getTranscript(studentNo):
-    return { "cumulative": 4.0 }
+    data = {"data":{
+                    "cumulative" : "0.42",
+                    "CoursesAndGrades":{
+                                        "CME3008":"AA",
+                                        "CME3006":"FF"
+                                    }
+        }
+    }
+    return data["data"]["cumulative"]
 
 def getInstructor(id):
     r = requests.post(INSTRUCTOR_API_URL, data = { "id": id })
