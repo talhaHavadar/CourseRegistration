@@ -27,10 +27,6 @@ app.factory("StudentService", function($http, $q) {
     return deferred.promise;
   };
 
-  factory.logout = function() {
-    alert("Logout id not implemented yet!");
-  };
-
   factory.me = function() {
     var deferred = $q.defer();
     $http.post("/courseregistration", {

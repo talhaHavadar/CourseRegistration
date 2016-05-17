@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
+from .models import Schedule
 import json
 import arrow
 from .api_handler import *
@@ -26,7 +27,7 @@ def login(request):
     return render(request, "Registration/login.html")
 
 def pinfo(request):
-    student = getStudent(request.session["user"])
+    student = getStudent(request.session["user"]) or dict()
 
     return render(request, "Registration/personalPage.html", { "student": student })
 
@@ -49,11 +50,45 @@ def mail(request):
         return HttpResponse('Make sure all fields are entered and valid.')
 
 def calc_semester(sClass):
-    semester = sClass * 2
+    semester = int(sClass) * 2
     now = arrow.now()
     if now.month > 9 and now.month < 2 :
         semester -= 1
+    print("sClass", sClass, semester)
     return semester
+
+def schedule(request):
+    student = getStudent(request.session["user"])
+    semester = calc_semester(student["class_no"])
+    schedules = Schedule.objects.filter(semester__count = semester, student_id = student["studentNo"])
+    print(schedules)
+    if len(schedules) == 0:
+        schedules = dict()
+        courses = dict()
+    else:
+        schedules = schedules[0]
+        courses = groupCourses(schedules.as_json()["courses"])
+    monday = list()
+    tuesday = list()
+    wednesday = list()
+    thursday = list()
+    friday = list()
+    saturday = list()
+
+    days = {
+        0: monday,
+        1: tuesday,
+        2: wednesday,
+        3: thursday,
+        4: friday,
+        5: saturday
+    }
+
+
+    for key, val in courses.iteritems():
+        days[key] = val
+    return render(request, "Registration/schedule.html", { "student": student, "monday": days[0],
+     "tuesday": days[1], "wednesday": days[2], "thursday": days[3], "friday": days[4], "saturday": days[5] })
 
 def registration(request):
     if request.method == "POST":
@@ -74,6 +109,10 @@ def registration(request):
             semester = calc_semester(int(sClass) +1)
             courses = getCourses(semester)
             return JsonResponse({"success":True, "courses": courses})
+        elif POST["method"] == "registration" and POST.get("courses", False):
+            courses = POST["courses"]
+            schedule = setSchedule(request, courses)
+            return JsonResponse({ "success": True, "schedule": schedule.as_json() })
         else:
             return JsonResponse({"success": False, "message": "Invalid method." })
     student = getStudent(request.session["user"])
@@ -85,5 +124,5 @@ def logout(request):
 
 def index(request):
     # del request.session["user"]
-    student = getStudent(request.session["user"])
+    student = getStudent(request.session["user"]) or dict()
     return render(request, "Registration/mainPage.html", { "student": student })

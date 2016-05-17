@@ -1,0 +1,148 @@
+{% extends 'Registration/base.html' %}
+{% load staticfiles %}
+{% load app_filters %}
+
+{% block title %}
+{{ block.super }} Registration
+{% endblock title%}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'Registration/stylesheets/registration.css' %}" charset="utf-8">
+{% endblock stylesheets %}
+
+{% block services %}
+<script src="{% static 'Registration/javascripts/services/SocketService.js' %}" charset="utf-8"></script>
+<script src="{% static 'Registration/javascripts/services/StudentFactory.js' %}" charset="utf-8"></script>
+<script src="{% static 'Registration/javascripts/services/CourseFactory.js' %}" charset="utf-8"></script>
+<script src="{% static 'Registration/javascripts/services/RegistrationFactory.js' %}" charset="utf-8"></script>
+
+{% endblock services %}
+
+{% block controllers %}
+<script src="{% static 'Registration/javascripts/controllers/RegistrationController.js' %}" charset="utf-8"></script>
+{% endblock controllers %}
+
+{% block body %}
+<body ng-app="CourseRegistrationApp" ng-controller="RegistrationController as ctrl" >
+	<div class="headerContainer">
+			<div class="infoHeader">
+					<div class="col-md-3 col-md-offset-1">
+							<div class="nameContainer">
+									<label>Name :</label>
+									<label>{{ student|valuefor:"name" }} {{ student|valuefor:"surname"|upper }}</label>
+							</div>
+							<div class="facultyContainer">
+									<label>Faculty :</label>
+									<label>{{ student|valuefor:"faculty"|valuefor:"name" }}</label>
+							</div>
+							<div class="classContainer">
+									<label>Class :</label>
+									<label>{{ student|valuefor:"class_no" }}</label>
+							</div>
+							<div class="AdvisorContainer">
+									<label>Advisor :</label>
+									<label>{{ student|valuefor:"advisor"|valuefor:"Name" }}</label>
+							</div>
+					</div>
+					<div class="col-md-3">
+							<label class="universityName1">Sanfancisco</label>
+							<label class="universityName2">University</label>
+					</div>
+					<div class="col-md-4">
+							<div class="studentNoContainer">
+									<label>Student No :</label>
+									<label>{{ student|valuefor:"studentNo" }}</label>
+							</div>
+							<div class="departmentContainer">
+									<label>Department :</label>
+									<label>{{ student|valuefor:"department"|valuefor:"name" }}</label>
+							</div>
+							<div class="cumulativeContainer">
+									<label>Cumulative :</label>
+									<label>{{ student|valuefor:"transcript"|valuefor:"cumulative" }}</label>
+							</div>
+					</div>
+					<div class="col-md-1">
+							<a href="/logout" class="btn btn-default logout">Logout</a>
+					</div>
+			</div>
+			<div class="navbarContainer">
+					<nav class="navbar">
+							<div class="container-fluid">
+									<div class="navbar-header">
+											<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+													<span class="sr-only">Toggle navigation</span>
+													<span class="icon-bar"></span>
+													<span class="icon-bar"></span>
+													<span class="icon-bar"></span>
+											</button>
+									</div>
+									<div id="navbar" class="navbar-collapse collapse">
+											<ul class="nav navbar-nav">
+													<li><a href="/">Main Page</a></li>
+													<li class="active"><a href="/courseregistration">Course Registration</a></li>
+													<li><a href="/pinfo">Personal Information</a></li>
+											</ul>
+									</div><!--/.nav-collapse -->
+							</div><!--/.container-fluid -->
+					</nav>
+			</div>
+	</div>
+	<div class="container">
+		<div class="row">
+      <div class="col-md-12">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in 8|get_range %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                {% if monday|get_index:i %}
+                  <td>{{monday|get_index:i|valuefor:"code"}} | {{monday|get_index:i|valuefor:"start_time"}} - {{monday|get_index:i|valuefor:"end_time"}}</td>
+                {% else %}
+                  <td></td>
+                {% endif %}
+                {% if tuesday|get_index:i %}
+                  <td>{{tuesday|get_index:i|valuefor:"code"}} | {{tuesday|get_index:i|valuefor:"start_time"}} - {{tuesday|get_index:i|valuefor:"end_time"}}</td>
+                {% else %}
+                  <td></td>
+                {% endif %}
+                {% if wednesday|get_index:i %}
+                  <td>{{wednesday|get_index:i|valuefor:"code"}} | {{wednesday|get_index:i|valuefor:"start_time"}} - {{wednesday|get_index:i|valuefor:"end_time"}}</td>
+                {% else %}
+                  <td></td>
+                {% endif %}
+                {% if thursday|get_index:i %}
+                  <td>{{thursday|get_index:i|valuefor:"code"}} | {{thursday|get_index:i|valuefor:"start_time"}} - {{thursday|get_index:i|valuefor:"end_time"}}</td>
+                {% else %}
+                  <td></td>
+                {% endif %}
+                {% if friday|get_index:i %}
+                  <td>{{friday|get_index:i|valuefor:"code"}} | {{friday|get_index:i|valuefor:"start_time"}} - {{friday|get_index:i|valuefor:"end_time"}}</td>
+                {% else %}
+                  <td></td>
+                {% endif %}
+                {% if saturday|get_index:i %}
+                  <td>{{saturday|get_index:i|valuefor:"code"}} | {{saturday|get_index:i|valuefor:"start_time"}} - {{saturday|get_index:i|valuefor:"end_time"}}</td>
+                {% else %}
+                  <td></td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+		</div>
+	</div>
+</body>
+{% endblock body %}

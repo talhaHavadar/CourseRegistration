@@ -2,12 +2,24 @@
 
 import requests
 import json
+import arrow
+from underscore import _
+from .models import *
 
 STUDENTS_API_URL = "http://194.27.104.26:8000/api/students/" # "./json/student.json" # change to local ip of student page
 STUDENTS_VALIDATE_API_URL = "http://194.27.104.26:8000/api/students/validation"
 COURSE_API_URL = "http://161.9.133.127/multitier/webservice/courses.php"
 TRANSCRIPT_API_URL = "http://161.9.134.198:8080/transcriptSystem/webservice/TranscriptRequest.php"
 INSTRUCTOR_API_URL = "http://194.27.104.175/webservice.php"
+
+COURSE_DAYS = {
+    "Monday": 0,
+    "Tuesday": 1,
+    "Wednesday": 2,
+    "Thursday": 3,
+    "Friday": 4,
+    "Saturday": 5,
+}
 
 def getStudent(student_no):
     payload = {
@@ -16,7 +28,6 @@ def getStudent(student_no):
     }
     r = requests.get(STUDENTS_API_URL, params = payload)
     data = r.json()
-    print("url", r.url)
     if len(data) != 0:
         advisor = getInstructor(data[0]["advisorId"])
         transcript = getTranscript(data[0]["studentNo"])
@@ -38,6 +49,10 @@ def isStudentValid(student_no, password):
 def getCourse(code):
     pass
 
+def groupCourses(courses):
+    sortedC = _.sortBy(courses, 'time')
+    groupedCourses = _.groupBy(sortedC, "day")
+    return groupedCourses
 
 def getCourses(semester):
     courses = list()
@@ -53,9 +68,8 @@ def getCourses(semester):
     return courses
 
 def getTranscript(studentNo):
-    studentNo = 100 # geçici
-    r = requests.post(TRANSCRIPT_API_URL, data = {"studentNumber": studentNo})
     try:
+        #r = requests.post(TRANSCRIPT_API_URL, data = {"studentNumber": studentNo})
         transcript = r.json()
         transcript = transcript["transcript"]
     except Exception as e:
@@ -69,6 +83,25 @@ def getInstructor(id):
     if len(instructors) > 0:
         return instructors[0]
     return None
+
+def setSchedule(request, courses):
+    user = request.session["user"]
+    if courses[0]["semester"] % 2 == 0:
+        now = arrow.now()
+        semString = "{}-{} {}".format(now.year - 1, now.year,"Spring Semester")
+        semester,c = Semester.objects.get_or_create(count=courses[0]["semester"], name = semString)
+    else:
+        now = arrow.now()
+        semString = "{}-{} {}".format(now.year, now.year + 1,"Fall Semester")
+        semester,c = Semester.objects.get_or_create(count=courses[0].semester, name = semString)
+    schedule = Schedule.objects.create(student_id = user, confirmed = False,semester = semester)
+    for course in courses:
+        day = COURSE_DAYS[course["days"]]
+        c, created = CourseInfo.objects.get_or_create(code=course["courseCode"], start_time= course["start_time"],
+        end_time= course["end_time"], instructor_name = course["instructor"]["Name"], day = day)
+        schedule.courses.add(c)
+    schedule.save()
+    return schedule
 
 def getInstructors():
     r = requests.get(INSTRUCTOR_API_URL)

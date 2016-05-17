@@ -9,7 +9,7 @@ class CourseInfoSerializer(serializers.ModelSerializer):
 class SemesterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Semester
-        fields = ('name',)
+        fields = ('name','count')
 
 class ScheduleSerializer(serializers.ModelSerializer):
     semester = SemesterSerializer(read_only = True)
