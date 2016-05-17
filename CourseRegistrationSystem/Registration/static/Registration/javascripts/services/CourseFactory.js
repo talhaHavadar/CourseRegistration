@@ -26,13 +26,14 @@ app.factory("CourseService",function($http, $q, StudentService){
 	    		});
 	      	}
 		});
+		return deferred.promise;
 	};
 
 	factory.getUpCourse = function(){
 		var deferred = $q.defer();
-		$http.post('/courseregistration'),{
-			"method":"courses-up"
-		}.then(function(data){
+		$http.post('/courseregistration',{
+			"method":"courses_up"
+		}).then(function(data){
 			if(data.status == 200 && data.data.success == true){
 				deferred.resolve(data.data);
 			} else {
@@ -52,6 +53,7 @@ app.factory("CourseService",function($http, $q, StudentService){
 	    	});
 	    }
 	});
+		return deferred.promise;
 	}
 
 	factory.filterCourse = function() {

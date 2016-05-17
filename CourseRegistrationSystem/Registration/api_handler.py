@@ -35,6 +35,7 @@ def isStudentValid(student_no, password):
 def getCourse(code):
     pass
 
+
 def getCourses(semester):
     return [
       {
@@ -59,7 +60,15 @@ def getCourses(semester):
       }]
 
 def getTranscript(studentNo):
-    return { "cumulative": 4.0 }
+    data = {"data":{
+                    "cumulative" : "0.42",
+                    "CoursesAndGrades":{
+                                        "CME3008":"AA", 
+                                        "CME3006":"FF"
+                                    }
+        }
+    }
+    return data["data"]["cumulative"]
 
 def getInstructor(id):
     return {

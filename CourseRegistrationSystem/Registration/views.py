@@ -68,6 +68,12 @@ def registration(request):
             student = getStudent(request.session["user"])
             student["semester"] = calc_semester(student["class_no"])
             return JsonResponse({ "success": True, "student": student })
+        elif POST["method"] == "courses_up":
+            student = getStudent(request.session["user"])
+            sClass = student["class_no"]
+            semester = calc_semester(int(sClass) +1)
+            courses = getCourses(semester)
+            return JsonResponse({"success":True, "courses": courses})
         else:
             return JsonResponse({"success": False, "message": "Invalid method." })
     student = getStudent(request.session["user"])

@@ -10,7 +10,7 @@ app.controller("MainController", ["$scope",'CourseService','StudentService', fun
     $scope.isOnPage = function(index){
         return $scope.currentPage == index;
     };
-    //StudentService.me();
+    StudentService.me();
    	CourseService.filterCourse();
 
 }]);

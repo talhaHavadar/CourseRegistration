@@ -13,12 +13,16 @@ body .headerContainer {
   padding-bottom: 0; }
   body .headerContainer .infoHeader {
     justify-content: center;
-    display: inline-block; }
+    display: flex; }
   body .headerContainer .universityName1 {
+    display: flex;
     text-align: center;
+    justify-content: center;
     font-size: 30pt; }
   body .headerContainer .universityName2 {
+    display: flex;
     text-align: center;
+    justify-content: center;
     font-size: 30pt; }
   body .headerContainer .navbar {
     border: none;
