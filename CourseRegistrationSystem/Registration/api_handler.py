@@ -3,9 +3,9 @@ import json
 
 STUDENTS_API_URL = "http://194.27.104.26:8000/api/students/" # "./json/student.json" # change to local ip of student page
 STUDENTS_VALIDATE_API_URL = "http://194.27.104.26:8000/api/students/validation"
-COURSE_API_URL = ""
-TRANSCRIPT_API_URL = ""
-INSTRUCTOR_API_URL = ""
+COURSE_API_URL = "http://161.9.133.127/multitier/webservice/courses.php"
+TRANSCRIPT_API_URL = "http://161.9.134.198:8080/transcriptSystem/webservice/TranscriptRequest.php"
+INSTRUCTOR_API_URL = "http://194.27.104.175/webservice.php"
 
 def getStudent(student_no):
     payload = {
@@ -37,33 +37,22 @@ def getCourse(code):
 
 
 def getCourses(semester):
-    return [
-      {
-        "id" : 125,
-        "semester": 6,
-        "code" : "CME3008",
-        "name": "Circuit Falan filan" ,
-        "instructor_id" : 21,
-        "start_time": "13:00:00",
-        "end_time": "14:15:00",
-        "quata": 25
-      },
-      {
-        "id" : 128,
-        "semester": 6,
-        "code" : "CME3006",
-        "name": "Network falan" ,
-        "instructor_id" : 25,
-        "start_time": "10:00:00",
-        "end_time": "12:15:00",
-        "quata": 40
-      }]
+    courses = list()
+    courses.append({"id" : 125,"semester": 6,"code" : "CME3008","name": "Circuit Falan filan" ,"instructor_id" : 16,"start_time": "13:00:00","end_time": "14:15:00","quata": 25})
+    courses.append({"id" : 128,"semester": 6,"code" : "CME3006","name": "Network falan","instructor_id" : 13,"start_time": "10:00:00","end_time": "12:15:00","quata": 40 })
+    courses.append({"id" : 130,"semester": 6,"code" : "CME3006","name": "Network falan","instructor_id" : 28,"start_time": "10:00:00","end_time": "12:15:00","quata": 40 })
+    # r = requests.post(COURSE_API_URL, data= { "format": "json" })
+    for c in courses:
+        instructor = getInstructor(c["instructor_id"])
+        c["instructor"] = instructor
+
+    return courses
 
 def getTranscript(studentNo):
     data = {"data":{
                     "cumulative" : "0.42",
                     "CoursesAndGrades":{
-                                        "CME3008":"AA", 
+                                        "CME3008":"AA",
                                         "CME3006":"FF"
                                     }
         }
@@ -71,14 +60,11 @@ def getTranscript(studentNo):
     return data["data"]["cumulative"]
 
 def getInstructor(id):
-    return {
-        "ID":19,
-        "Name":"Burcu Yankovan",
-        "PersonalID":551212,
-        "Course":"CME3004",
-        "Email":"burcu@hotmail.com",
-        "PhoneNumber":"5451236"
-      };
+    r = requests.post(INSTRUCTOR_API_URL, data = { "id": id })
+    instructors = r.json()
+    if len(instructors) > 0:
+        return instructors[0]
+    return None
 
 def getInstructors():
     pass

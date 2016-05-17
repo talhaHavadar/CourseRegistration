@@ -41,7 +41,6 @@ app.factory("CourseService",function($http, $q, StudentService){
 	          	success: false,
 	          	message: data.data.message
 	        }, function(data) {
-	      		console.log(data);
 	      		if(data.status == 200){
 	      			deferred.reject(data.data)
 	      		}else{
@@ -63,7 +62,6 @@ app.factory("CourseService",function($http, $q, StudentService){
 			if(student.transcript.cumulative >= 2.5){
 				factory.getUpCourse().then(function(data) {
 					var courses = data.courses;
-					console.log(courses);
 					deferred.resolve({
 						success: true,
 						courses: courses

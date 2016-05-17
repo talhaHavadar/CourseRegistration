@@ -7,7 +7,9 @@ app.factory("RegistrationService", function($http, $q, SocketService) {
     } else {
       alert("Socket connection is invalid please reload the page!");
     }
-  }
+  };
+
+  
 
   return factory;
 });
