@@ -65,7 +65,12 @@ def schedule(request):
     if len(schedules) == 0:
         schedules = dict()
         courses = dict()
+        message = "You haven't got any schedule."
     else:
+        if schedules[0].confirmed:
+            message = "Your schedule was confirmed."
+        else:
+            message = "Your schedule waiting for acceptance."
         schedules = schedules[0]
         courses = groupCourses(schedules.as_json()["courses"])
     monday = list()
@@ -88,9 +93,17 @@ def schedule(request):
     for key, val in courses.iteritems():
         days[key] = val
     return render(request, "Registration/schedule.html", { "student": student, "monday": days[0],
-     "tuesday": days[1], "wednesday": days[2], "thursday": days[3], "friday": days[4], "saturday": days[5] })
+     "tuesday": days[1], "wednesday": days[2], "thursday": days[3], "friday": days[4], "saturday": days[5],
+     "status_message": message })
 
 def registration(request):
+
+    student = getStudent(request.session["user"])
+    semester = calc_semester(student["class_no"])
+    schedules = Schedule.objects.filter(semester__count = semester, student_id = student["studentNo"])
+    if len(schedules) > 0:
+        return redirect("Registration:schedule")
+
     if request.method == "POST":
         POST = json.loads(request.body.decode("utf-8"))
         if POST["method"] == "courses":

@@ -56,10 +56,7 @@ def groupCourses(courses):
 
 def getCourses(semester):
     courses = list()
-    courses.append({"id" : 125,"semester": 6,"code" : "CME3008","name": "Circuit Falan filan" ,"instructor_id" : 16,"start_time": "13:00:00","end_time": "14:15:00","quata": 25})
-    courses.append({"id" : 128,"semester": 6,"code" : "CME3006","name": "Network falan","instructor_id" : 30,"start_time": "10:00:00","end_time": "12:15:00","quata": 40 })
-    courses.append({"id" : 130,"semester": 6,"code" : "CME3006","name": "Network falan","instructor_id" : 28,"start_time": "10:00:00","end_time": "12:15:00","quata": 40 })
-    r = requests.post(COURSE_API_URL, data= { "format": "json" })
+    r = requests.post(COURSE_API_URL, data= { "format": "json", "semester": semester })
     courses = r.json()
     for c in courses:
         instructor = getInstructor(c["instructor"])

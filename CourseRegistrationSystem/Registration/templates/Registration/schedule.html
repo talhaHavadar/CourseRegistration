@@ -7,6 +7,7 @@
 {% endblock title%}
 
 {% block stylesheets %}
+<link rel="stylesheet" href="{% static 'Registration/stylesheets/statusPage.css' %}">
 <link rel="stylesheet" href="{% static 'Registration/stylesheets/registration.css' %}" charset="utf-8">
 {% endblock stylesheets %}
 
@@ -45,7 +46,7 @@
 							</div>
 					</div>
 					<div class="col-md-3">
-							<label class="universityName1">Sanfancisco</label>
+							<label class="universityName1">Deep</label>
 							<label class="universityName2">University</label>
 					</div>
 					<div class="col-md-4">
@@ -142,6 +143,9 @@
           </tbody>
         </table>
       </div>
+			<div class="statusContainer col-md-12 col-md-offset-2">
+				<label id="statusLabel">{{ status_message }}</label>
+			</div>
 		</div>
 	</div>
 </body>
