@@ -11,6 +11,11 @@ body .headerContainer {
   color: #f8f5f1;
   padding: 10px 5px;
   padding-bottom: 0; }
+  body .headerContainer button {
+    background-color: #dc6871;
+    color: #f8f5f1;
+    font-size: 12pt;
+    font-family: GentiumRegular; }
   body .headerContainer .infoHeader {
     justify-content: center;
     display: flex; }
