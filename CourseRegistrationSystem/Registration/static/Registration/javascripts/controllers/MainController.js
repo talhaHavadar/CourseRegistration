@@ -1,7 +1,7 @@
 /**
  * Created by gulgu on 28.04.2016.
  */
-app.controller("MainController", ["$scope",'StudentService', function ($scope, StudentService) {
+app.controller("MainController", ["$scope",'CourseService','StudentService', function ($scope,CourseService, StudentService) {
     $scope.currentPage = 0;
     $scope.setPage = function (index) {
         $scope.currentPage = index;
@@ -10,5 +10,7 @@ app.controller("MainController", ["$scope",'StudentService', function ($scope, S
     $scope.isOnPage = function(index){
         return $scope.currentPage == index;
     };
-    StudentService.me();
+    //StudentService.me();
+   	CourseService.filterCourse();
+
 }]);
