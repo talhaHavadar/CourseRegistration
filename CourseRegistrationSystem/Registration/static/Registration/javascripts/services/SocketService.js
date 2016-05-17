@@ -7,7 +7,7 @@ app.factory("SocketService", function() {
   };
 
   factory.connect = function(onopenCallback, onmessageCallback, connecturl) {
-    connecturl = "ws://127.0.0.1:8000/web" || connecturl;
+    connecturl = "ws://0.0.0.0/web" || connecturl;
     socket = new WebSocket(connecturl);
     socket.onopen = onopenCallback;
     socket.onmessage = function (data) {

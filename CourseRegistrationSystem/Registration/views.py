@@ -70,7 +70,7 @@ def registration(request):
             return JsonResponse({ "success": True, "student": student })
         else:
             return JsonResponse({"success": False, "message": "Invalid method." })
-    student = getStudent(request.session["user"])
+    student = dict()#getStudent(request.session["user"])
     return render(request, "Registration/registration.html", { "student": student })
 
 def logout(request):
