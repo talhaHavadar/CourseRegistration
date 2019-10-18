@@ -64,7 +64,7 @@ scapy==2.3.2
 service-identity==16.0.0
 six==1.10.0
 software-center-aptd-plugins==0.0.0
-Twisted==16.1.1
+Twisted==19.7.0
 txaio==2.5.1
 ubuntuone-client-data==14.4
 underscore.py==0.1.6
