@@ -14,7 +14,7 @@ daphne==0.12.0
 debtags==2.0
 defer==1.0.6
 dirspec==13.10
-Django==1.9.6
+Django==1.11.29
 django-crispy-forms==1.6.0
 django-filter==0.13.0
 django-model-utils==2.5
